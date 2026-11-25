@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Conjunctions – Interactive 50 MCQ Quiz (සිංහල රීති සමඟ)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Sinhala', 'system-ui', 'sans-serif'],
+            sinhala: ['Noto Sans Sinhala', 'Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans Sinhala', system-ui, sans-serif;
+    }
+    .option-card {
+      transition: transform 0.14s ease, border-color 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .option-card:active {
+      transform: scale(0.99);
+    }
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .rule-reveal {
+      animation: fadeSlideIn 0.24s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+  <!-- Top Sticky Header & Controls -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800">
+              English Grammar • Conjunctions
+            </span>
+            <span id="modeBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+              Practice Mode (ක්ෂණික පිළිතුරු)
+            </span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+            Conjunctions 50 MCQ Quiz <span class="font-semibold text-slate-600 text-sm sm:text-base">(සිංහල ව්‍යාකරණ රීති සමඟ)</span>
+          </h1>
+        </div>
+
+        <!-- Mode Toggle, Timer & Reset -->
+        <div class="flex items-center flex-wrap gap-2">
+          <div class="inline-flex rounded-xl bg-slate-100 p-1 border border-slate-200" role="group" aria-label="Quiz Mode">
+            <button
+              id="practiceModeBtn"
+              type="button"
+              onclick="setQuizMode('practice')"
+              class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-indigo-600 text-white shadow-sm"
+            >
+              Practice Mode
+            </button>
+            <button
+              id="examModeBtn"
+              type="button"
+              onclick="setQuizMode('exam')"
+              class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-700 hover:bg-slate-200/70"
+            >
+              Exam Mode
+            </button>
+          </div>
+
+          <div
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-semibold"
+            title="Elapsed Time"
+          >
+            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+            </svg>
+            <span id="timerDisplay">00:00</span>
+          </div>
+
+          <button
+            type="button"
+            onclick="resetQuiz()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs sm:text-sm font-semibold transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Reset Quiz
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Bar & Live Stats -->
+      <div class="mt-3.5 pt-3 border-t border-slate-100">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm mb-1.5">
+          <div class="flex items-center gap-3 sm:gap-5 flex-wrap">
+            <span class="font-semibold text-slate-700">
+              Attempted: <span id="attemptedCount" class="text-indigo-700 font-bold">0</span> / <span id="totalFilteredCount">50</span>
+            </span>
+            <span class="font-semibold text-slate-700">
+              Score: <span id="scoreCount" class="text-emerald-700 font-bold">0</span>
+            </span>
+            <span class="font-semibold text-slate-700">
+              Accuracy: <span id="accuracyCount" class="text-slate-900 font-bold">0%</span>
+            </span>
+          </div>
+          <span id="progressPercentText" class="font-bold text-indigo-700">0% Complete</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+          <div
+            id="progressBar"
+            class="h-full bg-gradient-to-r from-indigo-600 via-blue-600 to-emerald-500 rounded-full transition-all duration-300"
+            style="width: 0%"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <!-- Section Filter Tabs & Action Bar -->
+    <section class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Question Sections">
+          <button
+            type="button"
+            data-filter="all"
+            onclick="setFilter('all')"
+            class="filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 text-white shadow-sm transition cursor-pointer"
+          >
+            All 50 (සියල්ල 1–50)
+          </button>
+          <button
+            type="button"
+            data-filter="part1"
+            onclick="setFilter('part1')"
+            class="filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+          >
+            Part 1: Coordinating (1–15)
+          </button>
+          <button
+            type="button"
+            data-filter="part2"
+            onclick="setFilter('part2')"
+            class="filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+          >
+            Part 2: Subordinating (16–35)
+          </button>
+          <button
+            type="button"
+            data-filter="part3"
+            onclick="setFilter('part3')"
+            class="filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer"
+          >
+            Part 3: Correlative &amp; Mixed (36–50)
+          </button>
+          <button
+            type="button"
+            data-filter="incorrect"
+            onclick="setFilter('incorrect')"
+            class="filter-tab inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition cursor-pointer"
+          >
+            <span>Review Incorrect Only</span>
+            <span id="incorrectBadge" class="px-1.5 py-0.2 rounded-full bg-rose-600 text-white text-xs font-bold">0</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            id="submitQuizBtn"
+            type="button"
+            onclick="submitExamQuiz()"
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-sm transition cursor-pointer"
+          >
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Submit &amp; Reveal All Rules
+          </button>
+        </div>
+      </div>
+
+      <!-- Mode Helper Banner -->
+      <div id="modeHelperBanner" class="rounded-xl bg-indigo-50/90 border border-indigo-100 px-3.5 py-2.5 text-xs sm:text-sm text-indigo-950 flex items-start gap-2.5">
+        <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div id="modeHelperText">
+          <strong>Practice Mode:</strong> ඔබ පිළිතුරක් තෝරාගත් සැණින් නිවැරදි පිළිතුර සහ ඊට අදාළ සිංහල ව්‍යාකරණ රීතිය පහළින් දිස්වේ.
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary Score Banner (Shown after submitting in Exam Mode or clicking Submit) -->
+    <section id="resultSummaryCard" class="hidden bg-white rounded-2xl border-2 border-indigo-200 p-5 sm:p-6 shadow-md rule-reveal">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">
+            Quiz Evaluation Summary (ප්‍රතිඵල සාරාංශය)
+          </span>
+          <h2 id="summaryHeadline" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">
+            ඔබේ ලකුණු වාර්තාව
+          </h2>
+          <p id="summarySubtext" class="text-sm text-slate-600 mt-1">
+            සියලුම ප්‍රශ්න සඳහා නිවැරදි පිළිතුරු සහ සිංහල ව්‍යාකරණ රීති දැන් දැකගත හැක.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-center shrink-0">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5">
+            <div id="summaryCorrect" class="text-xl sm:text-2xl font-extrabold text-emerald-700">0</div>
+            <div class="text-xs font-semibold text-emerald-900">Correct</div>
+          </div>
+          <div class="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5">
+            <div id="summaryWrong" class="text-xl sm:text-2xl font-extrabold text-rose-700">0</div>
+            <div class="text-xs font-semibold text-rose-900">Incorrect</div>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-2.5">
+            <div id="summaryPercent" class="text-xl sm:text-2xl font-extrabold text-indigo-700">0%</div>
+            <div class="text-xs font-semibold text-indigo-900">Score %</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onclick="setFilter('incorrect')"
+          class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold transition cursor-pointer"
+        >
+          Review Incorrect Questions Only
+        </button>
+        <button
+          type="button"
+          onclick="setFilter('all')"
+          class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold transition cursor-pointer"
+        >
+          View All 50 Questions
+        </button>
+        <button
+          type="button"
+          onclick="resetQuiz()"
+          class="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs sm:text-sm font-bold transition cursor-pointer"
+        >
+          Try Again (Reset)
+        </button>
+      </div>
+    </section>
+
+    <!-- Questions Container -->
+    <section id="questionsContainer" class="space-y-4"></section>
+
+    <!-- Empty State (e.g., when Review Incorrect Only has 0 items) -->
+    <div id="emptyState" class="hidden bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-sm">
+      <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 id="emptyTitle" class="text-lg font-bold text-slate-900">වැරදි පිළිතුරු කිසිවක් හමු නොවීය!</h3>
+      <p id="emptyDesc" class="text-sm text-slate-600 mt-1">
+        ඔබ පිළිතුරු සැපයූ ප්‍රශ්න අතරින් වැරදි ප්‍රශ්න නොමැත. සියලුම ප්‍රශ්න බැලීමට "All 50" තෝරන්න.
+      </p>
+      <button
+        type="button"
+        onclick="setFilter('all')"
+        class="mt-4 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition cursor-pointer"
+      >
+        Show All 50 Questions
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-slate-600">
+      <span>English Conjunctions Interactive 50 MCQ Quiz • සිංහල ව්‍යාකරණ රීති සමඟ</span>
+      <span>Coordinating (1–15) • Subordinating (16–35) • Correlative &amp; Mixed (36–50)</span>
+    </div>
+  </footer>
+
+  <script>
+    // Complete dataset of all 50 Conjunction MCQs with Sinhala grammar rules and distractor notes
+    const QUESTIONS = [
+      // PART 1: Coordinating Conjunctions (1-15)
+      {
+        id: 1,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'I wanted to go to the beach, _____ it started raining heavily.',
+        options: { A: 'and', B: 'but', C: 'so', D: 'or' },
+        answer: 'B',
+        ruleTitle: 'පරස්පර අදහස් සම්බන්ධ කිරීම — but (නමුත්)',
+        explanation:
+          'වෙරළට යාමට තිබූ කැමැත්ත (ධනාත්මක අදහස) සහ තදින් වැසි ඇද හැළීම (බාධාව/ප්‍රතිවිරුද්ධ අදහස) සම්බන්ධ කිරීමට <strong>but</strong> යොදයි. <em>And</em> එකතු කිරීමට, <em>so</em> ප්‍රතිඵලයට සහ <em>or</em> විකල්පයට යෙදේ.'
+      },
+      {
+        id: 2,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: "She didn't study for the test, _____ she passed with flying colors.",
+        options: { A: 'yet', B: 'nor', C: 'for', D: 'so' },
+        answer: 'A',
+        ruleTitle: 'බලාපොරොත්තු නොවූ පරස්පර ප්‍රතිඵලය — yet (එහෙත් / එසේ වුවත්)',
+        explanation:
+          'පරීක්ෂණයට පාඩම් නොකළත් ඉහළ සාමාර්ථයකින් සමත් වීම යන පුදුම සහගත ප්‍රතිවිරුද්ධ අදහස දැක්වීමට <strong>yet</strong> වඩාත් ගැළපේ. <em>So</em> යෙදුවහොත් "පාඩම් නොකළ නිසා සමත් වුණා" යන වැරදි අර්ථය ලැබේ.'
+      },
+      {
+        id: 3,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'You can have tea _____ coffee with your breakfast.',
+        options: { A: 'nor', B: 'but', C: 'or', D: 'yet' },
+        answer: 'C',
+        ruleTitle: 'විකල්ප දෙකකින් එකක් තෝරා ගැනීම — or (හෝ)',
+        explanation:
+          'උදෑසන ආහාරය සමඟ තේ හෝ කෝපි යන විකල්ප දෙකෙන් එකක් ලබා ගැනීමේ අවස්ථාව දැක්වීමට <strong>or</strong> යොදයි. <em>Nor</em> යෙදෙන්නේ සෘණාත්මක යුගලයක (neither...nor) ය.'
+      },
+      {
+        id: 4,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'He neither called me _____ sent a text message.',
+        options: { A: 'or', B: 'nor', C: 'but', D: 'so' },
+        answer: 'B',
+        ruleTitle: 'සෘණාත්මක යුගලය — neither...nor (දෙකෙන් එකක්වත් නැත)',
+        explanation:
+          'වාක්‍යයේ <strong>neither</strong> ඇති බැවින් එහි නිවැරදි සම්බන්ධක යුගලය වන්නේ <strong>nor</strong> ය. ඔහු ඇමතුවේද නැත, කෙටි පණිවුඩයක් යැව්වේද නැත යන අර්ථය මෙයින් ලැබේ.'
+      },
+      {
+        id: 5,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'It was getting late, _____ we decided to head home.',
+        options: { A: 'for', B: 'but', C: 'so', D: 'yet' },
+        answer: 'C',
+        ruleTitle: 'ප්‍රතිඵලය හෝ තීරණය දැක්වීම — so (එබැවින් / ඒ නිසා)',
+        explanation:
+          'ප්‍රමාද වෙමින් පැවතීම නිසා ඇති වූ තීරණය/ප්‍රතිඵලය ("නිවසට යාමට තීරණය කළා") දැක්වීමට <strong>so</strong> යොදයි. <em>For</em> යොදන්නේ හේතුව පසුව පැහැදිලි කරන විටය.'
+      },
+      {
+        id: 6,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'She bought fresh apples, bananas, _____ oranges from the market.',
+        options: { A: 'or', B: 'nor', C: 'and', D: 'yet' },
+        answer: 'C',
+        ruleTitle: 'ලැයිස්තුවක අවසන් පදය එකතු කිරීම — and (සහ)',
+        explanation:
+          'එකම වර්ගයේ නාම පද ලැයිස්තුවක (apples, bananas, oranges) අවසාන අයිතමය එකතු කිරීමට <strong>and</strong> යොදයි. විකල්පයක් නොව මිලදී ගත් සියලුම පලතුරු එහි ඇත.'
+      },
+      {
+        id: 7,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'We stayed indoors, _____ the weather was too cold outside.',
+        options: { A: 'for', B: 'so', C: 'or', D: 'nor' },
+        answer: 'A',
+        ruleTitle: 'හේතුව දැක්වීම — for (මක්නිසාද යත් / නිසා)',
+        explanation:
+          'අප ඇතුළත සිටීමට හේතුව ("පිටත කාලගුණය ඉතා සීතල වූ බැවින්") දැක්වීමට Coordinating conjunction ලෙස <strong>for</strong> යොදයි. <em>So</em> යෙදුවහොත් අර්ථය විකෘති වේ.'
+      },
+      {
+        id: 8,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'The train was delayed, _____ we still arrived on time for the meeting.',
+        options: { A: 'so', B: 'yet', C: 'for', D: 'nor' },
+        answer: 'B',
+        ruleTitle: 'ප්‍රතිවිරුද්ධ අවස්ථාව — yet (එසේ වුවත් / එහෙත්)',
+        explanation:
+          'දුම්රිය ප්‍රමාද වුවද රැස්වීමට නියමිත වේලාවට පැමිණීම යන පරස්පර සිදුවීම දැක්වීමට <strong>yet</strong> යොදයි. <em>Still</em> යන පදයද එම ප්‍රතිවිරුද්ධ අදහස තහවුරු කරයි.'
+      },
+      {
+        id: 9,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'Do you want to walk to the station, _____ shall I drive you there?',
+        options: { A: 'but', B: 'nor', C: 'or', D: 'yet' },
+        answer: 'C',
+        ruleTitle: 'ප්‍රශ්නයකදී විකල්ප ඉදිරිපත් කිරීම — or (නැතිනම් / හෝ)',
+        explanation:
+          'දුම්රිය ස්ථානයට ඇවිද යනවාද නැතිනම් වාහනයෙන් ඇරලවන්නද යන විකල්ප දෙක සම්බන්ධ කිරීමට <strong>or</strong> යොදයි.'
+      },
+      {
+        id: 10,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'He is a talented musician, _____ he rarely performs in public.',
+        options: { A: 'and', B: 'so', C: 'but', D: 'for' },
+        answer: 'C',
+        ruleTitle: 'පරස්පරතාව පෙන්වීම — but (නමුත්)',
+        explanation:
+          'දක්ෂ සංගීතඥයෙකු වීම (ධනාත්මක ගුණය) සහ කලාතුරකින් ප්‍රසිද්ධියේ රඟ දැක්වීම (පරස්පර කරුණ) සම්බන්ධ කිරීමට <strong>but</strong> යොදයි.'
+      },
+      {
+        id: 11,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'The garden looks lovely, _____ it rained all night.',
+        options: { A: 'yet', B: 'so', C: 'or', D: 'nor' },
+        answer: 'A',
+        ruleTitle: 'පරස්පර සිදුවීමක් සමඟ ප්‍රතිඵලය — yet (එහෙත්)',
+        explanation:
+          'රාත්‍රිය පුරා වැස්සත් උයන අලංකාරව පෙනීම යන පරස්පරතාව දැක්වීමට <strong>yet</strong> ගැළපේ. (සැ.යු: <em>even though</em> වැනි subordinating පදයකින් තොරව FANBOYS අතරින් <em>yet</em> වඩාත් සුදුසුය).'
+      },
+      {
+        id: 12,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'I was tired, _____ I finished my homework before sleeping.',
+        options: { A: 'for', B: 'yet', C: 'so', D: 'nor' },
+        answer: 'B',
+        ruleTitle: 'වෙහෙස නොතකා කළ ක්‍රියාව — yet (එසේ වුවත්)',
+        explanation:
+          'වෙහෙසට පත්ව සිටියද නිදාගැනීමට පෙර ගෙදර වැඩ නිම කිරීම යන ප්‍රතිවිරුද්ධ අදහස දැක්වීමට <strong>yet</strong> යොදයි.'
+      },
+      {
+        id: 13,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'Neither the teacher _____ the students knew the answer.',
+        options: { A: 'or', B: 'and', C: 'nor', D: 'but' },
+        answer: 'C',
+        ruleTitle: 'Neither සමඟ Nor රීතිය',
+        explanation:
+          '<strong>Neither</strong> සමඟ සැමවිටම භාවිත වන්නේ <strong>nor</strong> ය. ගුරුවරයාත් සිසුනුත් යන දෙපිරිසම පිළිතුර දැන සිටියේ නැත යන අර්ථය මෙයින් ගම්‍ය වේ.'
+      },
+      {
+        id: 14,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'She speaks English fluently, _____ she also writes well.',
+        options: { A: 'but', B: 'or', C: 'and', D: 'yet' },
+        answer: 'C',
+        ruleTitle: 'අතිරේක කරුණක් එකතු කිරීම — and (සහ / තවද)',
+        explanation:
+          'ඉංග්‍රීසි චතුර ලෙස කතා කිරීමට අමතරව හොඳින් ලිවීමේ හැකියාවද එකතු කිරීමට (<em>also</em> සමඟ) <strong>and</strong> යොදයි.'
+      },
+      {
+        id: 15,
+        part: 'part1',
+        partLabel: 'Part 1: Coordinating Conjunctions (FANBOYS)',
+        question: 'They missed the bus, _____ they had to take a taxi.',
+        options: { A: 'for', B: 'yet', C: 'so', D: 'but' },
+        answer: 'C',
+        ruleTitle: 'හේතුව -> ප්‍රතිඵලය — so (එබැවින් / එනිසා)',
+        explanation:
+          'බස් රථය මගහැරීම නිසා ඇති වූ ප්‍රතිඵලය ("කුලී රථයක් ගැනීමට සිදු වීම") දැක්වීමට <strong>so</strong> යොදයි.'
+      },
+
+      // PART 2: Subordinating Conjunctions (16-35)
+      {
+        id: 16,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ it was raining, we went for a long walk.',
+        options: { A: 'Because', B: 'Although', C: 'Unless', D: 'Since' },
+        answer: 'B',
+        ruleTitle: 'ප්‍රතිවිරුද්ධ වාක්‍ය ඛණ්ඩය — Although (වුවද / තිබියදීත්)',
+        explanation:
+          'වැසි ඇද හැළෙමින් තිබියදීත් දිගු ඇවිදීමක යෙදීම යන පරස්පරතාව දැක්වීමට <strong>Although</strong> යොදයි. <em>Because</em> හෝ <em>Since</em> හේතුව දැක්වීමට යෙදෙන අතර <em>Unless</em> "නැතිනම්" යන අර්ථය දෙයි.'
+      },
+      {
+        id: 17,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'I will call you _____ I reach home safely.',
+        options: { A: 'as soon as', B: 'although', C: 'unless', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'ක්ෂණික කාල සම්බන්ධය — as soon as (වූ වහාම)',
+        explanation:
+          'නිවසට ආරක්ෂිතව ළඟා වූ වහාම ඇමතුමක් දෙන බව පැවසීමට <strong>as soon as</strong> යොදයි. (සැ.යු: අනාගත කාලය ගැන කීවත් <em>as soon as</em> වාක්‍ය ඛණ්ඩයේ Present Simple <em>reach</em> යෙදේ).'
+      },
+      {
+        id: 18,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'You cannot enter the hall _____ you have a valid ticket.',
+        options: { A: 'if', B: 'unless', C: 'because', D: 'while' },
+        answer: 'B',
+        ruleTitle: 'සෘණාත්මක කොන්දේසිය — unless (නැතිනම් / if not)',
+        explanation:
+          '<strong>Unless</strong> යනු <em>if...not</em> යන අර්ථය දෙන පදයකි. වලංගු ටිකට් පතක් නොමැති නම් (<em>unless you have...</em>) ශාලාවට ඇතුළු විය නොහැක.'
+      },
+      {
+        id: 19,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: "He couldn't attend the seminar _____ he was sick.",
+        options: { A: 'although', B: 'unless', C: 'because', D: 'whereas' },
+        answer: 'C',
+        ruleTitle: 'හේතුව පැහැදිලි කිරීම — because (නිසා / බැවින්)',
+        explanation:
+          'සම්මන්ත්‍රණයට සහභාගී වීමට නොහැකි වූ හේතුව ("ඔහු අසනීපව සිටි නිසා") සෘජුවම දැක්වීමට <strong>because</strong> යොදයි.'
+      },
+      {
+        id: 20,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ I was reading the newspaper, the doorbell rang.',
+        options: { A: 'While', B: 'Until', C: 'Unless', D: 'Although' },
+        answer: 'A',
+        ruleTitle: 'සමගාමී / දිගටම සිදුවන ක්‍රියාවක් අතරතුර — While (අතරතුර)',
+        explanation:
+          'පුවත්පත කියවමින් සිටි කාලය අතරතුර (Past Continuous: <em>was reading</em>) සීනුව නාද වූ බව දැක්වීමට <strong>While</strong> යොදයි.'
+      },
+      {
+        id: 21,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'Please wait here _____ the manager returns.',
+        options: { A: 'although', B: 'until', C: 'unless', D: 'because' },
+        answer: 'B',
+        ruleTitle: 'කාල සීමාව දැක්වීම — until (තෙක් / වන තුරු)',
+        explanation:
+          'කළමනාකරු නැවත පැමිණෙන තෙක් මෙහි රැඳී සිටින ලෙස පැවසීමට කාල සීමා සම්බන්ධකය වන <strong>until</strong> යොදයි.'
+      },
+      {
+        id: 22,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ you work hard, you will not achieve your goals.',
+        options: { A: 'If', B: 'Unless', C: 'Because', D: 'When' },
+        answer: 'B',
+        ruleTitle: 'කොන්දේසිය — Unless (මහන්සි වී වැඩ නොකරන්නේ නම්)',
+        explanation:
+          'ඔබ මහන්සි වී වැඩ නොකරන්නේ නම් ඉලක්ක සපුරා ගත නොහැක යන අර්ථය සඳහා <strong>Unless</strong> යොදයි. (<em>If</em> යෙදුවහොත් "වැඩ කළොත් ඉලක්ක සපුරා නොගනී" යන වැරදි අර්ථය ලැබේ).'
+      },
+      {
+        id: 23,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'We have lived in this city _____ 2018.',
+        options: { A: 'until', B: 'since', C: 'unless', D: 'although' },
+        answer: 'B',
+        ruleTitle: 'ආරම්භක කාල ලක්ෂ්‍යය — since (2018 සිට)',
+        explanation:
+          'Present Perfect Tense (<em>have lived</em>) සමඟ අතීතයේ යම් නිශ්චිත වර්ෂයක/දිනයක සිට මේ දක්වා පවතින තත්ත්වයක් දැක්වීමට <strong>since</strong> යොදයි.'
+      },
+      {
+        id: 24,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'Wash your hands _____ you eat your dinner.',
+        options: { A: 'before', B: 'unless', C: 'although', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'කාල අනුපිළිවෙල — before (කෑමට පෙර)',
+        explanation:
+          'රාත්‍රී ආහාරය ගැනීමට පෙර අත් සෝදන ලෙස පැවසීමට පෙර සිදුවන ක්‍රියාව දක්වන <strong>before</strong> යොදයි.'
+      },
+      {
+        id: 25,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ she is very young, she handles responsibilities wisely.',
+        options: { A: 'Because', B: 'Even though', C: 'Since', D: 'Unless' },
+        answer: 'B',
+        ruleTitle: 'තීව්‍ර ප්‍රතිවිරුද්ධ අදහස — Even though (ඉතා ලාබාල වුවත්)',
+        explanation:
+          'ඇය ඉතා ලාබාල වුවත් වගකීම් බුද්ධිමත්ව ඉටු කරන බව දැක්වීමට පරස්පරතාව අවධාරණය කරන <strong>Even though</strong> යොදයි.'
+      },
+      {
+        id: 26,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: "I didn't buy the jacket _____ it was too expensive.",
+        options: { A: 'although', B: 'as', C: 'unless', D: 'until' },
+        answer: 'B',
+        ruleTitle: 'හේතුව දැක්වීමේ තවත් යෙදුමක් — as (නිසා / බැවින්)',
+        explanation:
+          'මෙහි <strong>as</strong> යනු <em>because</em> හා සමාන අර්ථයෙන් හේතුව ("එය ඉතා මිල අධික වූ නිසා") දැක්වීමට භාවිත කර ඇත.'
+      },
+      {
+        id: 27,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: "Let's start the meeting _____ everyone has arrived.",
+        options: { A: 'now that', B: 'unless', C: 'although', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'වත්මන් තත්ත්වයක් මත පදනම් වූ හේතුව — now that (දැන් සියල්ලන්ම පැමිණ ඇති බැවින්)',
+        explanation:
+          'යම් තත්ත්වයක් දැන් සම්පූර්ණ වී ඇති නිසා ඊළඟ පියවර ගැනීම ("සියල්ලන්ම පැමිණ ඇති නිසා රැස්වීම පටන් ගනිමු") පැවසීමට <strong>now that</strong> යොදයි.'
+      },
+      {
+        id: 28,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'He kept talking _____ the teacher asked him to stop.',
+        options: { A: 'until', B: 'since', C: 'if', D: 'because' },
+        answer: 'A',
+        ruleTitle: 'ක්‍රියාවක් නතර වන තෙක් පැවතීම — until (නවත්වන තුරු)',
+        explanation:
+          'ගුරුවරයා නවත්වන ලෙස පවසන තුරුම ඔහු දිගටම කතා කරමින් සිටි බව දැක්වීමට <strong>until</strong> යොදයි.'
+      },
+      {
+        id: 29,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ you need any help, feel free to ask me.',
+        options: { A: 'Unless', B: 'If', C: 'Although', D: 'Whereas' },
+        answer: 'B',
+        ruleTitle: 'ධනාත්මක කොන්දේසිය — If (උදව් අවශ්‍ය නම්)',
+        explanation:
+          'ඔබට යම් උදව්වක් අවශ්‍ය නම් මගෙන් අසන්න යන ධනාත්මක කොන්දේසි වාක්‍ය ඛණ්ඩය සඳහා <strong>If</strong> යොදයි.'
+      },
+      {
+        id: 30,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'She smiled happily _____ she heard the good news.',
+        options: { A: 'when', B: 'unless', C: 'although', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'සිදුවීමක් වූ අවස්ථාව — when (ඇසූ විට / අවස්ථාවේදී)',
+        explanation:
+          'සුබ ආරංචිය ඇසූ අවස්ථාවේදී ඇය සතුටින් සිනාසුණු බව දැක්වීමට කාලය/අවස්ථාව දක්වන <strong>when</strong> යොදයි.'
+      },
+      {
+        id: 31,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'Tom prefers tea, _____ his brother prefers coffee.',
+        options: { A: 'whereas', B: 'unless', C: 'until', D: 'because' },
+        answer: 'A',
+        ruleTitle: 'දෙදෙනෙකුගේ වෙනස සංසන්දනය — whereas (අතර / එහෙත්)',
+        explanation:
+          'ටොම් තේ වලට කැමති වන අතර ඔහුගේ සහෝදරයා කෝපි වලට කැමති බව — එනම් පුද්ගලයන් දෙදෙනෙකුගේ කැමැත්තේ වෙනස දැක්වීමට <strong>whereas</strong> යොදයි.'
+      },
+      {
+        id: 32,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: '_____ we finish this project, we can take a short break.',
+        options: { A: 'Once', B: 'Unless', C: 'Although', D: 'Whereas' },
+        answer: 'A',
+        ruleTitle: 'යම් කාර්යයක් අවසන් කළ පසු — Once (කළ පසු / වහාම)',
+        explanation:
+          'මෙම ව්‍යාපෘතිය අවසන් කළ පසු කෙටි විවේකයක් ගත හැකි බව පැවසීමට <strong>Once</strong> ("...කළ විගස / අවසන් වූ පසු") යොදයි.'
+      },
+      {
+        id: 33,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'I stayed up late _____ I had to complete my assignment.',
+        options: { A: 'although', B: 'since', C: 'unless', D: 'until' },
+        answer: 'B',
+        ruleTitle: 'හේතුව දැක්වීම — since (බැවින් / නිසා)',
+        explanation:
+          'පැවරුම සම්පූර්ණ කිරීමට සිදු වූ බැවින් රෑ බෝ වන තුරු අවදිව සිටි බව දැක්වීමට මෙහි <strong>since</strong> (<em>because</em> අර්ථයෙන්) යොදයි.'
+      },
+      {
+        id: 34,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: "_____ you don't hurry, you will miss the train.",
+        options: { A: 'If', B: 'Unless', C: 'Although', D: 'Before' },
+        answer: 'A',
+        ruleTitle: 'දැනටමත් "don\'t" ඇති විට If රීතිය',
+        explanation:
+          'වාක්‍යයේ දැනටමත් <strong>don\'t</strong> (සෘණාත්මක ක්‍රියා පදය) ඇති බැවින් නැවත <em>Unless</em> නොයොදා <strong>If</strong> යෙදිය යුතුය. (ද්විත්ව සෘණාත්මක භාවිතය වළක්වයි).'
+      },
+      {
+        id: 35,
+        part: 'part2',
+        partLabel: 'Part 2: Subordinating Conjunctions',
+        question: 'They left the party early _____ they were exhausted.',
+        options: { A: 'because', B: 'although', C: 'unless', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'හේතුව දැක්වීම — because (අධික වෙහෙස නිසා)',
+        explanation:
+          'සාදයෙන් කලින් පිටව යාමට හේතුව ("ඔවුන් අධික ලෙස වෙහෙසට පත්ව සිටි නිසා") පැහැදිලි කිරීමට <strong>because</strong> යොදයි.'
+      },
+
+      // PART 3: Correlative & Mixed Conjunctions (36-50)
+      {
+        id: 36,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: '_____ the principal _____ the vice-principal was present at the event.',
+        options: { A: 'Both / and', B: 'Neither / nor', C: 'Either / nor', D: 'Not only / or' },
+        answer: 'B',
+        ruleTitle: 'Neither...nor යුගලය සහ ඒකවචන ක්‍රියා පදය (was)',
+        explanation:
+          'විදුහල්පතිවරයාත් උප විදුහල්පතිවරයාත් යන දෙදෙනාම උත්සවයට පැමිණ නොසිටි බව පැවසීමට <strong>Neither...nor</strong> යොදයි. (<em>Both...and</em> සමඟ බහුවචන <em>were</em> යෙදිය යුතුය).'
+      },
+      {
+        id: 37,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'She is _____ intelligent _____ hardworking.',
+        options: { A: 'neither / or', B: 'both / nor', C: 'not only / but also', D: 'either / nor' },
+        answer: 'C',
+        ruleTitle: 'අතිරේක ගුණාංගයක් දැක්වීම — not only...but also (පමණක් නොව... ද)',
+        explanation:
+          'ඇය බුද්ධිමත් පමණක් නොව මහන්සි වී වැඩ කරන කෙනෙකුද වේ යන අර්ථය සඳහා නිවැරදි යුගලය <strong>not only / but also</strong> වේ.'
+      },
+      {
+        id: 38,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'You can _____ stay here _____ come with us.',
+        options: { A: 'neither / or', B: 'either / or', C: 'both / nor', D: 'not only / or' },
+        answer: 'B',
+        ruleTitle: 'විකල්ප දෙකක් — either...or (හෝ... නැතිනම්)',
+        explanation:
+          'මෙහි රැඳී සිටීම හෝ අප සමඟ පැමිණීම යන විකල්ප දෙකෙන් එකක් තෝරා ගැනීමට <strong>either / or</strong> යොදයි.'
+      },
+      {
+        id: 39,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: '_____ Ravi _____ Nimal passed the exam with distinction.',
+        options: { A: 'Either / nor', B: 'Both / and', C: 'Neither / or', D: 'Not only / nor' },
+        answer: 'B',
+        ruleTitle: 'දෙදෙනාම සම්බන්ධ කිරීම — Both...and (...සහ ... යන දෙදෙනාම)',
+        explanation:
+          'රවී සහ නිමල් යන දෙදෙනාම විශිෂ්ට සාමාර්ථ සහිතව විභාගය සමත් වූ බව පැවසීමට නිවැරදි යුගලය <strong>Both / and</strong> වේ.'
+      },
+      {
+        id: 40,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: "The box was _____ heavy _____ I couldn't lift it alone.",
+        options: { A: 'such / that', B: 'so / that', C: 'too / that', D: 'very / than' },
+        answer: 'B',
+        ruleTitle: 'so + Adjective + that රීතිය',
+        explanation:
+          'හිස්තැනට පසුව ඇත්තේ <em>heavy</em> යන නාම විශේෂණය (Adjective) පමණක් බැවින් <strong>so + adjective + that</strong> ("ඉතා බර වූයෙන්... මට තනිව එසවිය නොහැකි විය") යොදයි.'
+      },
+      {
+        id: 41,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'It was _____ a cold day _____ we stayed near the fire.',
+        options: { A: 'so / that', B: 'such / that', C: 'too / so', D: 'very / that' },
+        answer: 'B',
+        ruleTitle: 'such + (Adjective) + Noun Phrase + that රීතිය',
+        explanation:
+          'හිස්තැනට පසුව <em>a cold day</em> යන නාම පද ඛණ්ඩය (Noun phrase) ඇති බැවින් <strong>such / that</strong> යෙදිය යුතුය. (නාම විශේෂණය පමණක් නම් <em>so</em>; නාම පදයක් ඇත්නම් <em>such</em>).'
+      },
+      {
+        id: 42,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'He speaks _____ clearly _____ everyone understands him easily.',
+        options: { A: 'such / that', B: 'so / that', C: 'too / to', D: 'much / than' },
+        answer: 'B',
+        ruleTitle: 'so + Adverb + that රීතිය',
+        explanation:
+          '<em>clearly</em> යනු ක්‍රියා විශේෂණයකි (Adverb). ක්‍රියා විශේෂණයක් සමඟ ප්‍රතිඵලය දැක්වීමට <strong>so + adverb + that</strong> ("ඉතා පැහැදිලිව කතා කරන බැවින් සැමට පහසුවෙන් තේරේ") යොදයි.'
+      },
+      {
+        id: 43,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: "I don't know _____ she will join us for dinner.",
+        options: { A: 'whether', B: 'neither', C: 'both', D: 'so' },
+        answer: 'A',
+        ruleTitle: 'අවිනිශ්චිතතාව / තේරීම දැක්වීම — whether (...ද නැද්ද යන්න)',
+        explanation:
+          'ඇය රාත්‍රී භෝජන සංග්‍රහයට එක් වේවිද නැද්ද යන්න මා නොදන්නා බව ප්‍රකාශ කිරීමට <strong>whether</strong> යොදයි.'
+      },
+      {
+        id: 44,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'She is _____ kind _____ everyone likes her.',
+        options: { A: 'such / that', B: 'so / that', C: 'too / for', D: 'very / so' },
+        answer: 'B',
+        ruleTitle: 'so + Adjective + that රීතිය',
+        explanation:
+          '<em>kind</em> යනු නාම පදයක් නොමැති තනි නාම විශේෂණයකි (Adjective). එබැවින් <strong>so / that</strong> ("ඇය කොතරම් කරුණාවන්තද යත් සැමදෙනාම ඇයට කැමතිය") නිවැරදිය.'
+      },
+      {
+        id: 45,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: '_____ did he lose his wallet, _____ his phone battery died.',
+        options: { A: 'Both / and', B: 'Not only / but also', C: 'Either / or', D: 'Neither / nor' },
+        answer: 'B',
+        ruleTitle: 'Not only + Inversion (did he lose) + but also රීතිය',
+        explanation:
+          'වාක්‍යය <strong>Not only</strong> වලින් ආරම්භ වන විට <em>did he lose</em> ලෙස ප්‍රශ්නාර්ථ ආකෘතිය (Subject-auxiliary inversion) යෙදෙන අතර දෙවන කොටස <strong>but also</strong> වලින් සම්බන්ධ වේ.'
+      },
+      {
+        id: 46,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'Choose _____ the red shirt _____ the blue one.',
+        options: { A: 'neither / or', B: 'either / or', C: 'both / nor', D: 'not only / nor' },
+        answer: 'B',
+        ruleTitle: 'විකල්ප තේරීමක් — either...or (රතු කමිසය හෝ නිල් කමිසය)',
+        explanation:
+          'කමිස දෙකෙන් එකක් තෝරා ගන්නා ලෙස විධාන කිරීමේදී නිවැරදි correlative යුගලය <strong>either / or</strong> වේ.'
+      },
+      {
+        id: 47,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'They have _____ the time _____ the money to travel abroad right now.',
+        options: { A: 'either / or', B: 'neither / nor', C: 'both / or', D: 'not only / or' },
+        answer: 'B',
+        ruleTitle: 'සෘණාත්මක යුගලය — neither...nor (කාලයවත් මුදල්වත් නැත)',
+        explanation:
+          'විදේශ සංචාරයක් සඳහා දැනට කාලය හෝ මුදල් යන දෙකම ඔවුන් සතුව නොමැති බව දැක්වීමට <strong>neither / nor</strong> යොදයි.'
+      },
+      {
+        id: 48,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'He is _____ a good speaker _____ he wins every debate.',
+        options: { A: 'so / that', B: 'such / that', C: 'too / that', D: 'very / that' },
+        answer: 'B',
+        ruleTitle: 'such + a + Adjective + Noun + that රීතිය',
+        explanation:
+          '<em>a good speaker</em> යනු නාම පද ඛණ්ඩයක් (Noun phrase) බැවින් <strong>such / that</strong> ("ඔහු එතරම් හොඳ කථිකයෙකි, ඔහු සෑම විවාදයක්ම දිනයි") යොදයි.'
+      },
+      {
+        id: 49,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: '_____ English _____ Sinhala are spoken widely here.',
+        options: { A: 'Both / and', B: 'Neither / or', C: 'Either / nor', D: 'Not only / or' },
+        answer: 'A',
+        ruleTitle: 'Both...and සමඟ බහුවචන ක්‍රියා පදය (are spoken)',
+        explanation:
+          'ඉංග්‍රීසි සහ සිංහල යන භාෂා දෙකම මෙහි බහුලව කතා කරන බව දැක්වීමට <strong>Both / and</strong> යොදයි. එබැවින් ක්‍රියා පදය බහුවචන (<em>are</em>) වේ.'
+      },
+      {
+        id: 50,
+        part: 'part3',
+        partLabel: 'Part 3: Correlative & Mixed Conjunctions',
+        question: 'Take an umbrella _____ it rains later.',
+        options: { A: 'in case', B: 'unless', C: 'although', D: 'whereas' },
+        answer: 'A',
+        ruleTitle: 'පූර්ව සූදානමක් ලෙස යෙදෙන රීතිය — in case (වැස්සොත් කියලා)',
+        explanation:
+          'පසුව වැසි ඇති වුවහොත් එයට සූදානමක් ලෙස කුඩයක් රැගෙන යන ලෙස පැවසීමට <strong>in case</strong> ("...හොත් කියලා / වුවහොත්") යොදයි. <em>Unless</em> යෙදුවහොත් "වැස්සේ නැතිනම් කුඩයක් ගන්න" යන අර්ථය ලැබේ.'
+      }
+    ];
+
+    // Quiz State
+    let state = {
+      answers: {}, // { [questionId]: 'A' | 'B' | 'C' | 'D' }
+      mode: 'practice', // 'practice' | 'exam'
+      filter: 'all', // 'all' | 'part1' | 'part2' | 'part3' | 'incorrect'
+      submitted: false,
+      elapsedSeconds: 0
+    };
+
+    let timerInterval = null;
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        state.elapsedSeconds += 1;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = String(Math.floor(state.elapsedSeconds / 60)).padStart(2, '0');
+      const secs = String(state.elapsedSeconds % 60).padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = `${mins}:${secs}`;
+    }
+
+    function setQuizMode(newMode) {
+      state.mode = newMode;
+      const practiceBtn = document.getElementById('practiceModeBtn');
+      const examBtn = document.getElementById('examModeBtn');
+      const badge = document.getElementById('modeBadge');
+      const helperText = document.getElementById('modeHelperText');
+
+      if (newMode === 'practice') {
+        practiceBtn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-indigo-600 text-white shadow-sm cursor-pointer';
+        examBtn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-700 hover:bg-slate-200/70 cursor-pointer';
+        badge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800';
+        badge.textContent = 'Practice Mode (ක්ෂණික පිළිතුරු)';
+        helperText.innerHTML =
+          '<strong>Practice Mode:</strong> ඔබ පිළිතුරක් තෝරාගත් සැණින් නිවැරදි පිළිතුර සහ ඊට අදාළ සිංහල ව්‍යාකරණ රීතිය පහළින් දිස්වේ.';
+      } else {
+        examBtn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-indigo-600 text-white shadow-sm cursor-pointer';
+        practiceBtn.className = 'px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-700 hover:bg-slate-200/70 cursor-pointer';
+        badge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800';
+        badge.textContent = 'Exam Mode (අවසානයේ පිළිතුරු)';
+        helperText.innerHTML =
+          '<strong>Exam Mode:</strong> පළමුව ඔබේ පිළිතුරු තෝරාගන්න. ව්‍යාකරණ රීති සැඟවී පවතිනු ඇත. <strong>"Submit & Reveal All Rules"</strong> එබූ විට සියලුම පිළිතුරු සහ සිංහල රීති පෙන්වයි.';
+      }
+
+      renderQuestions();
+      updateStats();
+    }
+
+    function setFilter(newFilter) {
+      state.filter = newFilter;
+      document.querySelectorAll('.filter-tab').forEach((btn) => {
+        const isActive = btn.getAttribute('data-filter') === newFilter;
+        if (newFilter === 'incorrect' && btn.getAttribute('data-filter') === 'incorrect') {
+          btn.className = isActive
+            ? 'filter-tab inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-600 text-white shadow-sm transition cursor-pointer'
+            : 'filter-tab inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition cursor-pointer';
+        } else {
+          btn.className = isActive
+            ? 'filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 text-white shadow-sm transition cursor-pointer'
+            : 'filter-tab px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer';
+        }
+      });
+      renderQuestions();
+      updateStats();
+    }
+
+    function selectOption(questionId, optionKey) {
+      state.answers[questionId] = optionKey;
+      renderQuestions();
+      updateStats();
+    }
+
+    function submitExamQuiz() {
+      state.submitted = true;
+      renderQuestions();
+      updateStats();
+      renderResultSummary();
+      document.getElementById('resultSummaryCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetQuiz() {
+      state.answers = {};
+      state.submitted = false;
+      state.elapsedSeconds = 0;
+      updateTimerDisplay();
+      document.getElementById('resultSummaryCard').classList.add('hidden');
+      setFilter('all');
+      renderQuestions();
+      updateStats();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getFilteredQuestions() {
+      if (state.filter === 'part1') return QUESTIONS.filter((q) => q.part === 'part1');
+      if (state.filter === 'part2') return QUESTIONS.filter((q) => q.part === 'part2');
+      if (state.filter === 'part3') return QUESTIONS.filter((q) => q.part === 'part3');
+      if (state.filter === 'incorrect') {
+        return QUESTIONS.filter((q) => state.answers[q.id] && state.answers[q.id] !== q.answer);
+      }
+      return QUESTIONS;
+    }
+
+    function shouldRevealRule(q) {
+      if (state.submitted) return true;
+      if (state.mode === 'practice' && state.answers[q.id]) return true;
+      return false;
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      const emptyState = document.getElementById('emptyState');
+      const list = getFilteredQuestions();
+
+      if (list.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        if (state.filter === 'incorrect') {
+          document.getElementById('emptyTitle').textContent = 'වැරදි පිළිතුරු කිසිවක් හමු නොවීය!';
+          document.getElementById('emptyDesc').textContent =
+            'ඔබ තෝරාගත් පිළිතුරු අතරින් වැරදි පිළිතුරු නොමැත. සියලුම ප්‍රශ්න බැලීමට "All 50" තෝරන්න.';
+        }
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = list
+        .map((q) => {
+          const userAns = state.answers[q.id] || null;
+          const reveal = shouldRevealRule(q);
+          const isCorrect = userAns === q.answer;
+
+          const optionsHtml = ['A', 'B', 'C', 'D']
+            .map((optKey) => {
+              const optText = q.options[optKey];
+              const isSelected = userAns === optKey;
+              const isRightOption = q.answer === optKey;
+
+              let cardClasses =
+                'option-card w-full text-left flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl border text-sm sm:text-base cursor-pointer ';
+              let badgeClasses =
+                'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 border ';
+              let statusIcon = '';
+
+              if (reveal) {
+                if (isRightOption) {
+                  cardClasses += 'bg-emerald-50 border-emerald-500 text-emerald-950 font-semibold shadow-xs';
+                  badgeClasses += 'bg-emerald-600 text-white border-emerald-600';
+                  statusIcon = `<span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-md shrink-0">✓ නිවැරදි</span>`;
+                } else if (isSelected && !isRightOption) {
+                  cardClasses += 'bg-rose-50 border-rose-500 text-rose-950 font-medium';
+                  badgeClasses += 'bg-rose-600 text-white border-rose-600';
+                  statusIcon = `<span class="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-md shrink-0">✕ වැරදියි</span>`;
+                } else {
+                  cardClasses += 'bg-white border-slate-200 text-slate-600 opacity-80';
+                  badgeClasses += 'bg-slate-100 text-slate-600 border-slate-200';
+                }
+              } else {
+                if (isSelected) {
+                  cardClasses += 'bg-indigo-50 border-indigo-600 text-indigo-950 font-semibold shadow-xs';
+                  badgeClasses += 'bg-indigo-600 text-white border-indigo-600';
+                } else {
+                  cardClasses += 'bg-white border-slate-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50/40';
+                  badgeClasses += 'bg-slate-100 text-slate-700 border-slate-200';
+                }
+              }
+
+              const formattedSentenceOpt = `<span class="font-semibold underline decoration-dotted">${optText}</span>`;
+
+              return `
+                <button
+                  type="button"
+                  onclick="selectOption(${q.id}, '${optKey}')"
+                  class="${cardClasses}"
+                  aria-pressed="${isSelected}"
+                >
+                  <span class="flex items-center gap-3 min-w-0">
+                    <span class="${badgeClasses}">${optKey}</span>
+                    <span class="truncate sm:whitespace-normal">${formattedSentenceOpt}</span>
+                  </span>
+                  ${statusIcon}
+                </button>
+              `;
+            })
+            .join('');
+
+          // Show filled blank in sentence when revealed or selected
+          const displayBlank = reveal
+            ? `<span class="inline-block px-2 py-0.5 mx-0.5 rounded-md bg-emerald-100 text-emerald-900 font-bold border-b-2 border-emerald-600">${q.options[q.answer]}</span>`
+            : userAns
+            ? `<span class="inline-block px-2 py-0.5 mx-0.5 rounded-md bg-indigo-100 text-indigo-900 font-bold border-b-2 border-indigo-600">${q.options[userAns]}</span>`
+            : `<span class="inline-block px-3 py-0.5 mx-0.5 rounded-md bg-slate-100 text-slate-500 font-bold border-b-2 border-slate-400">_____</span>`;
+
+          const sentenceWithBlank = q.question.replace('_____', displayBlank);
+
+          let topStatusBadge = '';
+          if (reveal && userAns) {
+            topStatusBadge = isCorrect
+              ? `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Correct (+1)</span>`
+              : `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800">Incorrect (Ans: ${q.answer})</span>`;
+          } else if (reveal && !userAns) {
+            topStatusBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Unanswered (Ans: ${q.answer})</span>`;
+          } else if (userAns) {
+            topStatusBadge = `<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">Selected: ${userAns}</span>`;
+          }
+
+          const ruleBoxHtml = reveal
+            ? `
+              <div class="rule-reveal mt-4 rounded-xl border ${
+                userAns === null
+                  ? 'bg-amber-50/80 border-amber-200'
+                  : isCorrect
+                  ? 'bg-emerald-50/75 border-emerald-200'
+                  : 'bg-sky-50/90 border-sky-200'
+              } p-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                  <div class="text-xs sm:text-sm font-extrabold text-slate-900">
+                    <span class="text-emerald-700">නිවැරදි පිළිතුර: ${q.answer}) ${q.options[q.answer]}</span>
+                    <span class="mx-2 text-slate-400">|</span>
+                    <span class="text-indigo-900">${q.ruleTitle}</span>
+                  </div>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  ${q.explanation}
+                </p>
+              </div>
+            `
+            : '';
+
+          return `
+            <article id="q-card-${q.id}" class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-lg bg-slate-900 text-white text-xs font-bold">
+                    Q${q.id}
+                  </span>
+                  <span class="text-xs font-semibold text-slate-500">
+                    ${q.partLabel}
+                  </span>
+                </div>
+                ${topStatusBadge}
+              </div>
+
+              <h2 class="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-4">
+                ${sentenceWithBlank}
+              </h2>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${optionsHtml}
+              </div>
+
+              ${ruleBoxHtml}
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function updateStats() {
+      const totalAll = QUESTIONS.length;
+      const attemptedAll = Object.keys(state.answers).length;
+
+      let correctCount = 0;
+      let incorrectCount = 0;
+
+      QUESTIONS.forEach((q) => {
+        const ans = state.answers[q.id];
+        if (ans) {
+          if (ans === q.answer) correctCount += 1;
+          else incorrectCount += 1;
+        }
+      });
+
+      const accuracy = attemptedAll > 0 ? Math.round((correctCount / attemptedAll) * 100) : 0;
+      const completionPct = Math.round((attemptedAll / totalAll) * 100);
+
+      document.getElementById('attemptedCount').textContent = attemptedAll;
+      document.getElementById('totalFilteredCount').textContent = getFilteredQuestions().length;
+      document.getElementById('scoreCount').textContent = `${correctCount} / ${totalAll}`;
+      document.getElementById('accuracyCount').textContent = `${accuracy}%`;
+      document.getElementById('progressPercentText').textContent = `${completionPct}% Complete`;
+      document.getElementById('progressBar').style.width = `${completionPct}%`;
+      document.getElementById('incorrectBadge').textContent = incorrectCount;
+    }
+
+    function renderResultSummary() {
+      const total = QUESTIONS.length;
+      let correct = 0;
+      QUESTIONS.forEach((q) => {
+        if (state.answers[q.id] === q.answer) correct += 1;
+      });
+      const attempted = Object.keys(state.answers).length;
+      const wrong = total - correct;
+      const pct = Math.round((correct / total) * 100);
+
+      document.getElementById('summaryCorrect').textContent = correct;
+      document.getElementById('summaryWrong').textContent = wrong;
+      document.getElementById('summaryPercent').textContent = `${pct}%`;
+
+      let headline = 'හොඳ උත්සාහයක්! (Good Effort)';
+      if (pct >= 90) headline = 'විශිෂ්ටයි! ඔබ Conjunctions රීති ඉතා හොඳින් ප්‍රගුණ කර ඇත (90%+)';
+      else if (pct >= 75) headline = 'ඉතා හොඳයි! තව ටිකක් පුහුණු වීමෙන් 100% කරා යා හැක';
+      else if (pct >= 50) headline = 'සාමාන්‍ය මට්ටමක් — පහළින් ඇති සිංහල ව්‍යාකරණ රීති කියවා නැවත උත්සාහ කරන්න';
+      else headline = 'තවදුරටත් පුහුණු වන්න — සෑම ප්‍රශ්නයකම ව්‍යාකරණ රීතිය හොඳින් අධ්‍යයනය කරන්න';
+
+      document.getElementById('summaryHeadline').textContent = headline;
+      document.getElementById(
+        'summarySubtext'
+      ).textContent = `ප්‍රශ්න ${total} න් ${attempted} කට පිළිතුරු සපයා ඇත • නිවැරදි: ${correct} • වැරදි/පිළිතුරු නොදුන්: ${wrong}`;
+      document.getElementById('resultSummaryCard').classList.remove('hidden');
+    }
+
+    // Initialize quiz on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQuestions();
+      updateStats();
+      startTimer();
+    });
+  </script>
+</body>
+</html>
